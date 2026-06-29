@@ -1,0 +1,63 @@
+# MVP 一键启动: 后端 + 前端
+# 生产/进阶: 取消注释 postgres / redis / minio 切换到分布式存储
+services:
+  backend:
+    build: .
+    container_name: exam-grading-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # 源码挂载 (开发热重载)；生产环境去掉，用镜像内代码
+      - ./app:/app/app
+      - ./scripts:/app/scripts
+      - ./tests:/app/tests
+      # 持久化存储
+      - ./storage:/app/storage
+      - ./exam_grading.db:/app/exam_grading.db
+    environment:
+      - APP_ENV=dev
+      - APP_DEBUG=true
+      - DATABASE_URL=sqlite:////app/exam_grading.db
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: exam-grading-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # ===== 进阶: 切换 PostgreSQL + Redis + MinIO (取消注释) =====
+  # postgres:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_DB: exam_grading
+  #     POSTGRES_USER: exam
+  #     POSTGRES_PASSWORD: exam123
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+
+  # minio:
+  #   image: minio/minio
+  #   command: server /data --console-address ":9001"
+  #   ports:
+  #     - "9000:9000"
+  #     - "9001:9001"
+  #   environment:
+  #     MINIO_ROOT_USER: minioadmin
+  #     MINIO_ROOT_PASSWORD: minioadmin
+  #   volumes:
+  #     - miniodata:/data
+
+# volumes:
+  # pgdata:
+  # miniodata:

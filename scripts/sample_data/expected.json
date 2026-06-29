@@ -1,0 +1,23 @@
+{
+  "student_answers": [
+    "A",
+    "C",
+    "D",
+    "A",
+    "A"
+  ],
+  "correct_answers": [
+    "A",
+    "C",
+    "B",
+    "D",
+    "A"
+  ],
+  "expected_correct_indices": [
+    0,
+    1,
+    4
+  ],
+  "expected_score": 6.0,
+  "total_score": 10.0
+}

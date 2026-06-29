@@ -1,0 +1,33 @@
+# ===== Web 框架 =====
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20      # FastAPI 文件上传依赖
+
+# ===== 数据层 =====
+sqlalchemy==2.0.36
+# MVP 阶段用 SQLite 零配置启动；切换 PostgreSQL 改驱动 + DATABASE_URL 即可
+# psycopg2-binary==2.9.10
+alembic==1.14.0               # 数据库迁移
+
+# ===== 图像处理 (MVP 核心) =====
+opencv-python-headless==4.10.0.84   # headless 版无 GUI 依赖，适合服务端
+numpy==2.2.1
+Pillow==11.0.0                      # 图像 I/O 互转
+
+# ===== OCR (第 2 期启用，此处预留) =====
+# paddleocr==2.8.1
+# paddlepaddle==2.6.2
+
+# ===== LLM 判分 (第 2 期启用，此处预留) =====
+# litellm==1.55.10
+
+# ===== 工具 =====
+pydantic==2.10.4
+pydantic-settings==2.7.0
+python-dotenv==1.0.1
+loguru==0.7.3
+
+# ===== 测试 =====
+pytest==8.3.4
+pytest-asyncio==0.25.0
+httpx==0.28.1                 # FastAPI 测试客户端

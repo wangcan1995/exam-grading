@@ -1,0 +1,177 @@
+{
+  "anchors": {
+    "top_left": [
+      60,
+      60
+    ],
+    "top_right": [
+      1180,
+      60
+    ],
+    "bottom_right": [
+      1180,
+      1694
+    ],
+    "bottom_left": [
+      60,
+      1694
+    ]
+  },
+  "questions": [
+    {
+      "question_no": "1",
+      "correct_answer": "A",
+      "score": 2.0,
+      "options": [
+        {
+          "option": "A",
+          "cx": 320.0,
+          "cy": 300.0,
+          "radius": 28.0
+        },
+        {
+          "option": "B",
+          "cx": 410.0,
+          "cy": 300.0,
+          "radius": 28.0
+        },
+        {
+          "option": "C",
+          "cx": 500.0,
+          "cy": 300.0,
+          "radius": 28.0
+        },
+        {
+          "option": "D",
+          "cx": 590.0,
+          "cy": 300.0,
+          "radius": 28.0
+        }
+      ]
+    },
+    {
+      "question_no": "2",
+      "correct_answer": "C",
+      "score": 2.0,
+      "options": [
+        {
+          "option": "A",
+          "cx": 320.0,
+          "cy": 410.0,
+          "radius": 28.0
+        },
+        {
+          "option": "B",
+          "cx": 410.0,
+          "cy": 410.0,
+          "radius": 28.0
+        },
+        {
+          "option": "C",
+          "cx": 500.0,
+          "cy": 410.0,
+          "radius": 28.0
+        },
+        {
+          "option": "D",
+          "cx": 590.0,
+          "cy": 410.0,
+          "radius": 28.0
+        }
+      ]
+    },
+    {
+      "question_no": "3",
+      "correct_answer": "B",
+      "score": 2.0,
+      "options": [
+        {
+          "option": "A",
+          "cx": 320.0,
+          "cy": 520.0,
+          "radius": 28.0
+        },
+        {
+          "option": "B",
+          "cx": 410.0,
+          "cy": 520.0,
+          "radius": 28.0
+        },
+        {
+          "option": "C",
+          "cx": 500.0,
+          "cy": 520.0,
+          "radius": 28.0
+        },
+        {
+          "option": "D",
+          "cx": 590.0,
+          "cy": 520.0,
+          "radius": 28.0
+        }
+      ]
+    },
+    {
+      "question_no": "4",
+      "correct_answer": "D",
+      "score": 2.0,
+      "options": [
+        {
+          "option": "A",
+          "cx": 320.0,
+          "cy": 630.0,
+          "radius": 28.0
+        },
+        {
+          "option": "B",
+          "cx": 410.0,
+          "cy": 630.0,
+          "radius": 28.0
+        },
+        {
+          "option": "C",
+          "cx": 500.0,
+          "cy": 630.0,
+          "radius": 28.0
+        },
+        {
+          "option": "D",
+          "cx": 590.0,
+          "cy": 630.0,
+          "radius": 28.0
+        }
+      ]
+    },
+    {
+      "question_no": "5",
+      "correct_answer": "A",
+      "score": 2.0,
+      "options": [
+        {
+          "option": "A",
+          "cx": 320.0,
+          "cy": 740.0,
+          "radius": 28.0
+        },
+        {
+          "option": "B",
+          "cx": 410.0,
+          "cy": 740.0,
+          "radius": 28.0
+        },
+        {
+          "option": "C",
+          "cx": 500.0,
+          "cy": 740.0,
+          "radius": 28.0
+        },
+        {
+          "option": "D",
+          "cx": 590.0,
+          "cy": 740.0,
+          "radius": 28.0
+        }
+      ]
+    }
+  ]
+}
