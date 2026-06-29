@@ -75,9 +75,32 @@ docker compose up --build
 # 后端: http://localhost:8000  前端: http://localhost:5173
 ```
 
-### 方式三：生产服务器部署
+### 方式三：生产服务器部署（Ubuntu / 4核4G）
 
-买完服务器（推荐 Ubuntu 22.04 / 4核4G），照着 **[部署指南](docs/部署指南.md)** 操作即可上线，包含 Docker 部署、HTTPS 配置、COS 对象存储、定时备份等完整流程。
+**一次安装环境（新服务器执行一次）**：
+```bash
+bash deploy/install.sh      # 装 Docker + 拉代码 + 生成配置
+```
+
+**日常运维（数字菜单，选数字操作）**：
+```bash
+bash deploy/menu.sh         # 进菜单：启动/停止/重启/更新代码/看日志/状态/备份
+```
+
+> 💡 建议加别名，以后直接敲 `menu` 进菜单：
+> `echo "alias menu='bash ~/exam-grading/deploy/menu.sh'" >> ~/.bashrc && source ~/.bashrc`
+
+详细流程见 **[部署指南](docs/部署指南.md)**。
+
+`deploy/` 目录脚本说明：
+
+| 脚本 | 用途 |
+|---|---|
+| `install.sh` | 一次性安装：装 Docker + 拉代码 + 生成 `.env.prod` |
+| `menu.sh` | ⭐ 日常运维菜单（启动/停止/重启/更新/日志/状态/备份/进容器） |
+| `backup.sh` | 数据备份（数据库+配置打包，菜单里也能调用） |
+| `uninstall.sh` | 卸载（保留数据；加 `--purge` 彻底删除） |
+| `nginx.conf` | Nginx 反代配置 |
 
 
 ---
