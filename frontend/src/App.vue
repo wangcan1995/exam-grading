@@ -30,7 +30,7 @@ function goRoute(path) {
   <el-container style="min-height: 100vh">
     <!-- 桌面端头部 -->
     <el-header v-if="!isMobile" class="app-header">
-      <h2 class="app-title">📝 试卷阅卷打分系统</h2>
+      <h2 class="app-title">📝 试卷阅卷打分系统1</h2>
       <el-menu
         :default-active="$route.path"
         mode="horizontal"
