@@ -1,6 +1,10 @@
-# 环境与密钥
+# 环境与密钥 (绝对不能推到远端!)
 .env
 .env.local
+.env.prod
+deploy/certs/
+*.pem
+*.key
 
 # Python
 __pycache__/
