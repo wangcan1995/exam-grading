@@ -1,28 +1,28 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { ref, onMounted, onUnmounted } from "vue";
+import { RouterLink, RouterView } from "vue-router";
 
-const isMobile = ref(false)
-const drawerVisible = ref(false)
+const isMobile = ref(false);
+const drawerVisible = ref(false);
 
 function checkMobile() {
-  isMobile.value = window.innerWidth < 768
+  isMobile.value = window.innerWidth < 768;
 }
 
 onMounted(() => {
-  checkMobile()
-  window.addEventListener('resize', checkMobile)
-})
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
+});
 
 onUnmounted(() => {
-  window.removeEventListener('resize', checkMobile)
-})
+  window.removeEventListener("resize", checkMobile);
+});
 
 function goRoute(path) {
-  drawerVisible.value = false
+  drawerVisible.value = false;
   // vue-router handles navigation via <router-link>, but for drawer items we use programmatic navigation
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new PopStateEvent('popstate'))
+  window.history.pushState({}, "", path);
+  window.dispatchEvent(new PopStateEvent("popstate"));
 }
 </script>
 
@@ -38,7 +38,7 @@ function goRoute(path) {
         text-color="#fff"
         active-text-color="#fff"
         router
-        style="margin-left: 40px; border: none; flex: 1;"
+        style="margin-left: 40px; border: none; flex: 1"
       >
         <el-menu-item index="/scan">扫描判分</el-menu-item>
         <el-menu-item index="/papers">试卷管理</el-menu-item>
@@ -49,8 +49,12 @@ function goRoute(path) {
     <!-- 移动端头部 -->
     <el-header v-else class="app-header app-header-mobile">
       <h2 class="app-title app-title-mobile">📝 阅卷系统</h2>
-      <div style="flex:1;"></div>
-      <el-button text @click="drawerVisible = true" style="color:#fff; font-size:22px; padding:4px 8px;">
+      <div style="flex: 1"></div>
+      <el-button
+        text
+        @click="drawerVisible = true"
+        style="color: #fff; font-size: 22px; padding: 4px 8px"
+      >
         ☰
       </el-button>
     </el-header>
@@ -75,7 +79,9 @@ function goRoute(path) {
           <span>📋 试卷管理</span>
         </el-menu-item>
       </el-menu>
-      <el-tag type="warning" size="small" effect="dark" style="margin-top: 20px;">第1期 MVP</el-tag>
+      <el-tag type="warning" size="small" effect="dark" style="margin-top: 20px"
+        >第1期 MVP</el-tag
+      >
     </el-drawer>
 
     <el-main :class="{ 'app-main-mobile': isMobile }">
