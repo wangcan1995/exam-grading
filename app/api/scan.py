@@ -86,7 +86,11 @@ def get_sheet_results(sheet_id: int, db: Session = Depends(get_db)):
 
 @router.get("/images/{sheet_id}/{kind}")
 def get_image(sheet_id: int, kind: str, db: Session = Depends(get_db)):
-    """获取答题卡图片。kind: original / processed。"""
+    """获取答题卡图片。kind: original / processed。
+
+    本地存储: 返回 FileResponse
+    COS 存储: 302 重定向到 COS 公网 URL (不占服务器带宽)
+    """
     if kind not in ("original", "processed"):
         raise HTTPException(400, "kind 必须是 original 或 processed")
 
@@ -98,10 +102,19 @@ def get_image(sheet_id: int, kind: str, db: Session = Depends(get_db)):
     if not rel:
         raise HTTPException(404, f"该答题卡没有 {kind} 图片")
 
+    from app.core.storage import get_storage
+    storage = get_storage()
+
+    # COS 模式: 直接重定向到公网 URL
+    if settings.storage_type.lower() == "cos":
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(storage.access_url(rel))
+
+    # 本地模式: 直接返回文件
+    data = storage.get_bytes(rel)
+    if data is None:
+        raise HTTPException(404, "图片文件不存在")
     path = Path(rel)
     if not path.is_absolute():
         path = settings.project_root / rel
-    if not path.exists():
-        raise HTTPException(404, "图片文件不存在")
-
     return FileResponse(str(path))

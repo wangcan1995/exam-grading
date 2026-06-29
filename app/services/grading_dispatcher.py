@@ -80,14 +80,14 @@ def _template_to_layout(template_json) -> list[QuestionLayout]:
 
 
 def _save_image(img: np.ndarray, name: str) -> str:
-    """保存图片到 processed 目录，返回相对项目根的路径。"""
-    out_path = settings.processed_path / name
-    ok, buf = cv2.imencode(".png", img)
-    if not ok:
-        raise RuntimeError(f"图片编码失败: {name}")
-    buf.tofile(str(out_path))   # tofile 兼容中文路径
-    # 存相对项目根的路径，便于跨目录启动 + 前端通过相对路径访问
-    return str(out_path.relative_to(settings.project_root)).replace("\\", "/")
+    """保存矫正后图片，返回 key (相对项目根路径，兼容本地/COS)。
+
+    本地模式: 存到 storage/processed/{name}
+    COS 模式: 存到 COS 的 storage/processed/{name}
+    """
+    from app.core.storage import get_storage
+    key = f"storage/processed/{name}"
+    return get_storage().save_image(img, key)
 
 
 def grade_student_sheet(
@@ -101,8 +101,13 @@ def grade_student_sheet(
     db.flush()
     logger.info(f"开始判分 sheet={sheet.id} paper={paper.name}")
 
-    # ① 预处理
-    _, deskewed_bgr, binary = preprocess(sheet.original_path)
+    # ① 预处理 (从存储层读原图到内存，兼容本地/COS)
+    from app.core.storage import get_storage
+    from app.ai.image import preprocess_image
+    original_img = get_storage().read_image(sheet.original_path)
+    if original_img is None:
+        raise FileNotFoundError(f"原图读取失败: {sheet.original_path}")
+    _, deskewed_bgr, binary = preprocess_image(original_img)
     logger.info(
         f"预处理完成 sheet={sheet.id} "
         f"shape={deskewed_bgr.shape} 矫正图尺寸"

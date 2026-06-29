@@ -19,13 +19,14 @@ from app.ai.image.preprocess import (
     denoise,
     load_image,
     preprocess,
+    preprocess_image,
     to_gray,
 )
 
 __all__ = [
     # preprocess
     "load_image", "to_gray", "denoise", "adaptive_threshold",
-    "detect_skew_angle", "deskew", "preprocess",
+    "detect_skew_angle", "deskew", "preprocess", "preprocess_image",
     # anchor
     "AnchorPoints", "WarpResult", "detect_and_warp",
     # omr

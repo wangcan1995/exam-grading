@@ -122,12 +122,12 @@ def deskew(img: np.ndarray, angle: Optional[float] = None) -> np.ndarray:
 # ------------------------------------------------------------------
 # 完整预处理流水线
 # ------------------------------------------------------------------
-def preprocess(image_path: str | Path) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """完整预处理流水线。
+def preprocess_image(img: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """完整预处理流水线 (从内存图像数组开始)。
 
+    :param img: BGR 图像 (numpy 数组)
     :return: (原始BGR, 矫正后BGR, 二值化图)
     """
-    img = load_image(image_path)
     gray = to_gray(img)
     denoised = denoise(gray)
 
@@ -140,3 +140,12 @@ def preprocess(image_path: str | Path) -> tuple[np.ndarray, np.ndarray, np.ndarr
     final_binary = adaptive_threshold(denoise(final_gray))
 
     return img, deskewed_bgr, final_binary
+
+
+def preprocess(image_path: str | Path) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """完整预处理流水线 (从文件路径读取)。
+
+    :return: (原始BGR, 矫正后BGR, 二值化图)
+    """
+    img = load_image(image_path)
+    return preprocess_image(img)

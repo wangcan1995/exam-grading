@@ -27,6 +27,9 @@ pydantic-settings==2.7.0
 python-dotenv==1.0.1
 loguru==0.7.3
 
+# ===== 对象存储 (COS, 启用 STORAGE_TYPE=cos 时需要) =====
+cos-python-sdk-v5==1.9.32
+
 # ===== 测试 =====
 pytest==8.3.4
 pytest-asyncio==0.25.0

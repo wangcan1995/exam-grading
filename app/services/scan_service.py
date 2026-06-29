@@ -17,23 +17,25 @@ ALLOWED_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 async def save_upload(
     upload_file: UploadFile, paper_id: int
 ) -> tuple[str, str]:
-    """保存上传文件，返回 (保存路径, 原始文件名)。"""
+    """保存上传文件，返回 (存储 key, 原始文件名)。
+
+    本地模式: 存到 storage/uploads/{uuid}.ext，返回相对项目根路径
+    COS 模式: 存到 COS，返回相对 key (前端通过 /api/images 访问)
+    """
     ext = Path(upload_file.filename or "").suffix.lower()
     if ext not in ALLOWED_IMAGE_EXTS:
         raise ValueError(
             f"不支持的文件类型: {ext}，仅支持 {', '.join(ALLOWED_IMAGE_EXTS)}"
         )
 
-    # 用 uuid 避免重名，保留原扩展名
     saved_name = f"{uuid.uuid4().hex}{ext}"
-    saved_path = settings.upload_path / saved_name
+    key = f"storage/uploads/{saved_name}"
 
     content = await upload_file.read()
-    saved_path.write_bytes(content)
-    logger.info(f"文件已保存: {saved_path} ({len(content)} bytes)")
-    # 存相对项目根的路径，统一用 / 分隔，便于前端 URL 访问
-    rel = str(saved_path.relative_to(settings.project_root)).replace("\\", "/")
-    return rel, upload_file.filename or saved_name
+    from app.core.storage import get_storage
+    get_storage().save_bytes(content, key)
+    logger.info(f"文件已保存: {key} ({len(content)} bytes)")
+    return key, upload_file.filename or saved_name
 
 
 def create_sheet(

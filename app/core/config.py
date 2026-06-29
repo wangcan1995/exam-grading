@@ -43,6 +43,13 @@ class Settings(BaseSettings):
     llm_api_key: str = ""
     llm_model: str = ""
 
+    # ===== 对象存储 =====
+    storage_type: str = "local"        # local 或 cos
+    cos_secret_id: str = ""
+    cos_secret_key: str = ""
+    cos_region: str = "ap-guangzhou"
+    cos_bucket: str = ""
+
     @model_validator(mode="after")
     def _resolve_storage_paths(self):
         """把相对存储路径转成基于项目根目录的绝对路径。
@@ -75,6 +82,13 @@ class Settings(BaseSettings):
     def project_root(self) -> Path:
         """项目根目录，用于计算图片存储的相对路径。"""
         return Path(__file__).resolve().parent.parent.parent
+
+    @property
+    def storage_dir_path(self) -> Path:
+        """本地存储的根目录 (storage_type=local 时用)。"""
+        p = Path(self.storage_dir)
+        p.mkdir(parents=True, exist_ok=True)
+        return p
 
 
 settings = Settings()
